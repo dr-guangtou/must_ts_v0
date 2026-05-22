@@ -1,0 +1,10 @@
+name: elg_s23b_i_cmod_25.2_cosmos_v0.1
+mode: production
+photometric_catalog: s23b_i_cmod_25.2
+recipe: elg/v0.1_cosmos_smoke
+footprint: cosmos_v0
+output_root: /Volumes/galaxy/must/target_selection
+tract_ids:
+  - 9812
+  - 9813
+  - 9814

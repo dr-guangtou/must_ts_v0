@@ -1,0 +1,41 @@
+[project]
+name = "must-ts-v0"
+version = "0.1.0"
+description = "MUST target-selection v0 bookkeeping and QA pipeline"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.10.0",
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
+    "pyarrow>=16.0.0",
+    "pyyaml>=6.0.0",
+]
+
+[project.scripts]
+must-evaluate-recipe = "must_ts.cli.evaluate_recipe:main"
+must-inspect-catalog = "must_ts.cli.inspect_catalog:main"
+must-select-targets = "must_ts.cli.select_targets:main"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.0",
+    "pytest>=8.0.0",
+    "ruff>=0.8.0",
+]
+
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+include = ["must_ts*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

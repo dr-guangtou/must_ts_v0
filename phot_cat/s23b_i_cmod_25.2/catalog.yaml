@@ -1,0 +1,31 @@
+name: s23b_i_cmod_25.2
+kind: photometric_catalog
+format: parquet_manifest
+manifest_path: /Volumes/galaxy/hsc/s23b/i_cmod_25_2_all/global_tract_manifest.csv
+path_column: subset_parquet_path
+object_id_column: object_id
+ra_column: ra
+dec_column: dec
+tract_id_column: tract_id
+default_columns:
+  - object_id
+  - ra
+  - dec
+  - tract
+  - g_cmodel_flux
+  - r_cmodel_flux
+  - i_cmodel_flux
+  - z_cmodel_flux
+  - a_g
+  - a_r
+  - a_i
+  - a_z
+footprints:
+  cosmos_v0:
+    kind: radec_box_assumed_area
+    ra_min: 149.0
+    ra_max: 151.06
+    dec_min: 1.39
+    dec_max: 3.07
+    effective_area_deg2: 2.0
+    area_status: assumed

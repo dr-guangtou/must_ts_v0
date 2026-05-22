@@ -1,0 +1,20 @@
+name: s23b_i_cmod_25.2
+primary_key: object_id
+required_identity_columns:
+  - object_id
+  - ra
+  - dec
+  - tract
+photometry_columns:
+  - g_cmodel_flux
+  - r_cmodel_flux
+  - i_cmodel_flux
+  - z_cmodel_flux
+extinction_columns:
+  - a_g
+  - a_r
+  - a_i
+  - a_z
+notes:
+  - The registry uses subset_parquet_path for first-pass galaxy selections.
+  - Full merged parquet paths remain available through the HSC global manifest.

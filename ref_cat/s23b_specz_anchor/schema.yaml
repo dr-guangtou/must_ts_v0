@@ -1,0 +1,11 @@
+name: s23b_specz_anchor
+primary_key: object_id
+redshift_column: z_best
+quality_columns:
+  - has_attached_redshift
+  - z_best_source_measurement_kind
+  - z_best_cross_tract_candidate_flag
+  - z_best_ambiguity_flag
+notes:
+  - This is a compact truth lookup, not a self-contained photometric feature table.
+  - Evaluation joins this reference catalog to photometric selections by object_id.

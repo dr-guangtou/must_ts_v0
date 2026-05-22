@@ -1,0 +1,50 @@
+target_class: elg
+version: v0.1_cosmos_smoke
+description: Technical ELG smoke recipe for COSMOS-only pipeline testing.
+science_approved: false
+required_columns:
+  - object_id
+  - ra
+  - dec
+  - tract
+  - g_cmodel_flux
+  - r_cmodel_flux
+  - i_cmodel_flux
+  - z_cmodel_flux
+  - a_g
+  - a_r
+  - a_i
+  - a_z
+derived_columns:
+  - name: g_cmodel_mag_mw
+    expression: mag_from_flux(g_cmodel_flux, a_g)
+  - name: r_cmodel_mag_mw
+    expression: mag_from_flux(r_cmodel_flux, a_r)
+  - name: i_cmodel_mag_mw
+    expression: mag_from_flux(i_cmodel_flux, a_i)
+  - name: z_cmodel_mag_mw
+    expression: mag_from_flux(z_cmodel_flux, a_z)
+  - name: g_minus_r
+    expression: g_cmodel_mag_mw - r_cmodel_mag_mw
+  - name: r_minus_i
+    expression: r_cmodel_mag_mw - i_cmodel_mag_mw
+cuts:
+  - name: finite_griz
+    expression: is_finite(g_cmodel_mag_mw) and is_finite(r_cmodel_mag_mw) and is_finite(i_cmodel_mag_mw) and is_finite(z_cmodel_mag_mw)
+  - name: i_mag_smoke_limit
+    expression: i_cmodel_mag_mw < 24.0
+  - name: blue_smoke_color
+    expression: g_minus_r < 1.0
+  - name: bounded_ri_smoke_color
+    expression: r_minus_i < 1.0
+output_columns:
+  - object_id
+  - ra
+  - dec
+  - tract
+  - g_cmodel_mag_mw
+  - r_cmodel_mag_mw
+  - i_cmodel_mag_mw
+  - z_cmodel_mag_mw
+  - g_minus_r
+  - r_minus_i
