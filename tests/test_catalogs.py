@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 from must_ts.catalogs.footprints import Footprint
-from must_ts.catalogs.readers import read_catalog_partitions
+from must_ts.catalogs.readers import read_catalog_partitions, read_catalog_partitions_with_summary
 from must_ts.catalogs.registry import CatalogContract
 
 
@@ -78,3 +78,52 @@ def test_read_catalog_partitions_filters_footprint(tmp_path):
     df = read_catalog_partitions(contract, footprint=footprint)
 
     assert df["object_id"].tolist() == [1]
+
+
+def test_read_csv_manifest_partitions_reports_counts(tmp_path):
+    partition_path = tmp_path / "part.csv"
+    pd.DataFrame(
+        {
+            "object_id": [1, 2, 3],
+            "ra": [150.0, 150.5, 160.0],
+            "dec": [2.0, 2.1, 2.0],
+            "tract": [9813, 9813, 9813],
+        }
+    ).to_csv(partition_path, index=False)
+    manifest_path = tmp_path / "manifest.csv"
+    pd.DataFrame({"tract_id": [9813], "partition_path": [str(partition_path)]}).to_csv(
+        manifest_path, index=False
+    )
+    catalog_path = tmp_path / "catalog.yaml"
+    catalog_path.write_text(
+        "\n".join(
+            [
+                "name: csv_test",
+                "kind: reference_spatial_source",
+                "format: csv_manifest",
+                f"manifest_path: {manifest_path}",
+                "path_column: partition_path",
+                "object_id_column: object_id",
+                "ra_column: ra",
+                "dec_column: dec",
+                "tract_id_column: tract_id",
+                "default_columns: [object_id, ra, dec, tract]",
+            ]
+        )
+    )
+    contract = CatalogContract.from_yaml(catalog_path, repo_root=Path("/not/repo"))
+    footprint = Footprint(
+        name="cosmos",
+        kind="radec_box_assumed_area",
+        ra_min=149.0,
+        ra_max=151.06,
+        dec_min=1.39,
+        dec_max=3.07,
+        effective_area_deg2=2.0,
+    )
+
+    result = read_catalog_partitions_with_summary(contract, footprint=footprint)
+
+    assert result.dataframe["object_id"].tolist() == [1, 2]
+    assert result.summary["input_row_count"].tolist() == [3]
+    assert result.summary["output_row_count"].tolist() == [2]

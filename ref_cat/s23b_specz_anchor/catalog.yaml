@@ -20,4 +20,27 @@ default_columns:
   - z_best_cross_tract_candidate_flag
   - z_best_ambiguity_flag
   - z_best_err
-footprints: {}
+footprints:
+  cosmos_v0:
+    kind: radec_box_assumed_area
+    ra_min: 149.0
+    ra_max: 151.06
+    dec_min: 1.39
+    dec_max: 3.07
+    effective_area_deg2: 2.0
+    area_status: assumed
+spatial_source:
+  name: s23b_hsc_anchor_index
+  format: csv_manifest
+  manifest_path: /Volumes/galaxy/hsc/photoz/specz_merge/hsc_anchor_index/manifest/hsc_anchor_partitions_manifest.csv
+  path_column: partition_path
+  object_id_column: object_id
+  ra_column: ra
+  dec_column: dec
+  tract_id_column: tract_id
+  default_columns:
+    - object_id
+    - ra
+    - dec
+    - tract
+    - patch

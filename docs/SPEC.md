@@ -34,12 +34,30 @@ The dataset is documented in `docs/datasets/s23b_i_cmod_25.2.md`. Treat that doc
 ## Current v0 Workflow
 
 - Catalog contracts live under `phot_cat/` and `ref_cat/`.
+- Reference catalog contracts may declare a coordinate-bearing `spatial_source`
+  when the truth table itself does not carry RA/Dec.
 - YAML recipes live under `recipes/<target_class>/`.
 - Run configs live under `run_configs/evaluation/` and `run_configs/production/`.
 - Evaluation runs apply the recipe to the photometric catalog first, then join reference truth by `object_id`.
+- Reference-evaluation runs assemble the reference catalog first, join
+  photometric columns by `object_id`, and then apply the recipe. Use this mode
+  to validate a recipe on objects with reliable redshifts.
+- Reference-evaluation QA figures should compare selected targets against the
+  assembled reference-plus-photometry parent sample. Current required views are
+  spatial distribution, redshift distribution, color-color distribution, and
+  magnitude-color distribution. Axes should use robust finite-data limits so a
+  few extreme outliers do not hide the main sample.
 - Production runs apply the recipe to the photometric catalog and skip the reference-truth join.
 - The current COSMOS footprint contract is `RA=[149.0, 151.06]`, `Dec=[1.39, 3.07]`, with assumed effective area `2.0 deg^2`.
 - The first ELG recipe is `recipes/elg/v0.1_cosmos_smoke.yaml`; it is a technical smoke recipe and is not science-approved.
+- Selection recipes should separate data-agnostic science intent from
+  dataset-specific translation. For ELGs, `recipes/elg/elg_desi_lop/selection_criteria.md`
+  describes the general criteria, while
+  `recipes/elg/elg_desi_lop/hsc_s23b_i_cmod_25.2/` contains HSC-specific translations.
+- Footprint selection must report measured input and output row counts. The
+  first implemented footprint kind is `radec_box_assumed_area`; future kinds may
+  use polygon region files or HEALPix/HEALSparse masks while preserving the same
+  count-reporting contract.
 
 ## External References
 

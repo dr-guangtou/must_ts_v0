@@ -14,7 +14,9 @@ dependencies = [
 
 [project.scripts]
 must-evaluate-recipe = "must_ts.cli.evaluate_recipe:main"
+must-evaluate-reference-flag-impact = "must_ts.cli.evaluate_reference_flag_impact:main"
 must-inspect-catalog = "must_ts.cli.inspect_catalog:main"
+must-select-reference-footprint = "must_ts.cli.select_reference_footprint:main"
 must-select-targets = "must_ts.cli.select_targets:main"
 
 [dependency-groups]

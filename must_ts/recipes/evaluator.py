@@ -142,7 +142,7 @@ class ExpressionEvaluator:
         if isinstance(node.op, ast.USub):
             return -value
         if isinstance(node.op, ast.Not):
-            return ~value
+            return ~as_boolean_mask(value)
         raise ValueError(f"unsupported unary operator: {ast.dump(node.op)}")
 
     def _eval_boolop(self, node: ast.BoolOp) -> Any:
@@ -197,3 +197,14 @@ def mag_from_flux(flux: pd.Series, extinction: pd.Series | float = 0.0) -> pd.Se
     mag = pd.Series(mag, index=flux_array.index)
     mag[~np.isfinite(mag) | (flux_array <= 0)] = np.nan
     return mag - extinction
+
+
+def as_boolean_mask(value: Any) -> pd.Series:
+    """Interpret bool-like recipe values as a boolean mask."""
+    series = pd.Series(value, copy=False)
+    if pd.api.types.is_bool_dtype(series):
+        return series.fillna(False)
+    if pd.api.types.is_numeric_dtype(series):
+        return series.fillna(0).ne(0)
+    normalized = series.astype("string").str.strip().str.lower()
+    return normalized.isin({"true", "1", "t", "yes", "y"})
