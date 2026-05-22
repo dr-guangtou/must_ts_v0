@@ -1,0 +1,23 @@
+name: s23b_specz_anchor
+kind: reference_catalog
+format: parquet_manifest
+manifest_path: /Volumes/galaxy/hsc/photoz/specz_merge/z_best_lookup/2026-04-11_zbest_lookup_refresh_v1/manifest/z_best_lookup_partitions_manifest.csv
+path_column: partition_path
+object_id_column: object_id
+ra_column:
+dec_column:
+tract_id_column: tract_id
+default_columns:
+  - object_id
+  - has_attached_redshift
+  - z_best
+  - z_best_source
+  - z_best_source_measurement_kind
+  - attached_measurement_count
+  - attached_source_count
+  - has_alternate_measurements
+  - z_best_match_separation_arcsec
+  - z_best_cross_tract_candidate_flag
+  - z_best_ambiguity_flag
+  - z_best_err
+footprints: {}
