@@ -30,4 +30,6 @@ run products live outside Git under `/Volumes/galaxy/must/target_selection/`.
 - First photometric catalog: `s23b_i_cmod_25.2`
 - First reference catalog: `s23b_specz_anchor`
 - First footprint: `cosmos_v0`, with assumed effective area `2.0 deg^2`
-- First target class: ELG technical smoke recipe
+- First worked target-selection demo: HSC S23B translation of the DESI ELG
+  LOP-style selection in `recipes/elg/elg_desi_lop/`. This is not
+  science-approved.
