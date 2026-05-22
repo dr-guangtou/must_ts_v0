@@ -2,6 +2,27 @@
 
 Last updated: 2026-05-22
 
+## Current Task: README Documentation Refresh
+
+- [x] Create a documentation branch before editing.
+- [x] Move README reference-list material into `docs/`.
+- [x] Rewrite `README.md` around project goals, repository rules, target-selection procedure, and the ELG demo.
+- [x] Update nearby documentation that still described only the older smoke recipe.
+- [x] Run verification checks and record a review.
+
+## Review
+
+- Replaced the scratch README with a project overview, basic rules, repository
+  map, target-selection procedure, and ELG demo commands.
+- Moved HSC, DESI, MUST white paper, and target-class reference links to
+  `docs/references/target_selection_references.md`.
+- Updated `docs/architecture.md` to identify the current worked demo as the
+  HSC S23B DESI ELG LOP-style translation rather than only the original smoke
+  recipe.
+- Verification passed: `uv run ruff check .`,
+  `uv run ruff format --check .`, `uv run pytest`, `uv lock --check`, and
+  `git diff --check`.
+
 ## Current Task: Reference-Evaluation QA Figures
 
 - [x] Add parent-sample comparison QA figures for reference-evaluation runs.
