@@ -1,0 +1,11 @@
+name: elg_s23b_specz_anchor_cosmos_hsc_proxy_v0.2
+mode: reference_evaluation
+photometric_catalog: s23b_i_cmod_25.2
+reference_catalog: s23b_specz_anchor
+recipe: elg/elg_desi_lop/hsc_s23b_i_cmod_25.2/v0.2_hsc_seeing80
+footprint: cosmos_v0
+output_root: /Volumes/galaxy/must/target_selection
+tract_ids:
+  - 9812
+  - 9813
+  - 9814

@@ -1,0 +1,103 @@
+target_class: elg
+version: elg_desi_lop/hsc_s23b_i_cmod_25.2/v0.2_hsc_seeing80
+description: HSC S23B translation of DESI Main ELG color cuts using seeing80 g-band aperture flux.
+science_approved: false
+reference_criteria: recipes/elg/elg_desi_lop/selection_criteria.md
+translation_notes: recipes/elg/elg_desi_lop/hsc_s23b_i_cmod_25.2/translation.md
+dataset: s23b_i_cmod_25.2
+required_columns:
+  - object_id
+  - ra
+  - dec
+  - tract
+  - g_cmodel_flux
+  - r_cmodel_flux
+  - z_cmodel_flux
+  - g_cmodel_fluxerr
+  - r_cmodel_fluxerr
+  - z_cmodel_fluxerr
+  - g_seeing80_aper_6pix_flux
+  - g_seeing80_aper_6pix_flux_err
+  - g_seeing80_aper_6pix_flag
+  - g_inputcount_value
+  - r_inputcount_value
+  - z_inputcount_value
+  - a_g
+  - a_r
+  - a_z
+  - g_pixelflags_offimage
+  - r_pixelflags_offimage
+  - z_pixelflags_offimage
+  - g_pixelflags_edge
+  - r_pixelflags_edge
+  - z_pixelflags_edge
+  - g_pixelflags_saturatedcenter
+  - r_pixelflags_saturatedcenter
+  - z_pixelflags_saturatedcenter
+  - g_pixelflags_crcenter
+  - r_pixelflags_crcenter
+  - z_pixelflags_crcenter
+  - g_pixelflags_bad
+  - r_pixelflags_bad
+  - z_pixelflags_bad
+  - g_pixelflags_suspectcenter
+  - r_pixelflags_suspectcenter
+  - z_pixelflags_suspectcenter
+  - g_mask_brightstar_halo
+  - r_mask_brightstar_halo
+  - z_mask_brightstar_halo
+  - g_mask_brightstar_ghost
+  - r_mask_brightstar_ghost
+  - z_mask_brightstar_ghost
+  - g_mask_brightstar_blooming
+  - r_mask_brightstar_blooming
+  - z_mask_brightstar_blooming
+derived_columns:
+  - name: g_total_mag
+    expression: mag_from_flux(g_cmodel_flux, a_g)
+  - name: r_total_mag
+    expression: mag_from_flux(r_cmodel_flux, a_r)
+  - name: z_total_mag
+    expression: mag_from_flux(z_cmodel_flux, a_z)
+  - name: g_aperture_mag
+    expression: mag_from_flux(g_seeing80_aper_6pix_flux, a_g)
+  - name: g_minus_r
+    expression: g_total_mag - r_total_mag
+  - name: r_minus_z
+    expression: r_total_mag - z_total_mag
+cuts:
+  - name: full_color_observed
+    expression: g_inputcount_value > 0 and r_inputcount_value > 0 and z_inputcount_value > 0
+  - name: positive_total_fluxes
+    expression: g_cmodel_flux > 0 and r_cmodel_flux > 0 and z_cmodel_flux > 0
+  - name: positive_total_flux_errors
+    expression: g_cmodel_fluxerr > 0 and r_cmodel_fluxerr > 0 and z_cmodel_fluxerr > 0
+  - name: finite_hsc_proxy_magnitudes
+    expression: is_finite(g_total_mag) and is_finite(r_total_mag) and is_finite(z_total_mag) and is_finite(g_aperture_mag)
+  - name: seeing80_aperture_flux_clean
+    expression: g_seeing80_aper_6pix_flux > 0 and g_seeing80_aper_6pix_flux_err > 0 and not g_seeing80_aper_6pix_flag
+  - name: hsc_pixel_flags_clean
+    expression: not g_pixelflags_offimage and not r_pixelflags_offimage and not z_pixelflags_offimage and not g_pixelflags_edge and not r_pixelflags_edge and not z_pixelflags_edge and not g_pixelflags_saturatedcenter and not r_pixelflags_saturatedcenter and not z_pixelflags_saturatedcenter and not g_pixelflags_crcenter and not r_pixelflags_crcenter and not z_pixelflags_crcenter and not g_pixelflags_bad and not r_pixelflags_bad and not z_pixelflags_bad and not g_pixelflags_suspectcenter and not r_pixelflags_suspectcenter and not z_pixelflags_suspectcenter
+  - name: hsc_brightstar_masks_clean
+    expression: not g_mask_brightstar_halo and not r_mask_brightstar_halo and not z_mask_brightstar_halo and not g_mask_brightstar_ghost and not r_mask_brightstar_ghost and not z_mask_brightstar_ghost and not g_mask_brightstar_blooming and not r_mask_brightstar_blooming and not z_mask_brightstar_blooming
+  - name: desi_reference_g_bright_limit
+    expression: g_total_mag > 20.0
+  - name: hsc_seeing80_g_aperture_limit
+    expression: g_aperture_mag < 24.1
+  - name: desi_reference_r_minus_z_lower_bound
+    expression: r_minus_z > 0.15
+  - name: desi_reference_star_low_z_rejection
+    expression: g_minus_r < 0.5 * r_minus_z + 0.1
+  - name: desi_reference_lop_region
+    expression: g_minus_r < -1.2 * r_minus_z + 1.3
+output_columns:
+  - object_id
+  - ra
+  - dec
+  - tract
+  - g_total_mag
+  - r_total_mag
+  - z_total_mag
+  - g_aperture_mag
+  - g_minus_r
+  - r_minus_z

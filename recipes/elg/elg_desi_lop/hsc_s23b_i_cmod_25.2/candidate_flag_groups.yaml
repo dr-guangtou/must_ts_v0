@@ -1,0 +1,38 @@
+name: elg_desi_lop_hsc_s23b_candidate_flags
+description: Candidate HSC flags to evaluate on COSMOS reference objects before finalizing the ELG clean-sample mask.
+flag_groups:
+  - name: pixel_edge_offimage
+    columns:
+      - g_pixelflags_offimage
+      - r_pixelflags_offimage
+      - z_pixelflags_offimage
+      - g_pixelflags_edge
+      - r_pixelflags_edge
+      - z_pixelflags_edge
+  - name: pixel_center_artifacts
+    columns:
+      - g_pixelflags_saturatedcenter
+      - r_pixelflags_saturatedcenter
+      - z_pixelflags_saturatedcenter
+      - g_pixelflags_crcenter
+      - r_pixelflags_crcenter
+      - z_pixelflags_crcenter
+      - g_pixelflags_suspectcenter
+      - r_pixelflags_suspectcenter
+      - z_pixelflags_suspectcenter
+  - name: pixel_bad
+    columns:
+      - g_pixelflags_bad
+      - r_pixelflags_bad
+      - z_pixelflags_bad
+  - name: brightstar_masks
+    columns:
+      - g_mask_brightstar_halo
+      - r_mask_brightstar_halo
+      - z_mask_brightstar_halo
+      - g_mask_brightstar_ghost
+      - r_mask_brightstar_ghost
+      - z_mask_brightstar_ghost
+      - g_mask_brightstar_blooming
+      - r_mask_brightstar_blooming
+      - z_mask_brightstar_blooming
