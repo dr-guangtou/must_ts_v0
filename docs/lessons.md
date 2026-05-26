@@ -1,6 +1,26 @@
 # Lessons
 
-Last updated: 2026-05-22
+Last updated: 2026-05-26
+
+## 2026-05-26
+
+- The repository was missing a single-command end-to-end demo. The new
+  `scripts/run_elg_demo.py` reuses the existing `must_ts` Python API for
+  inspect, reference-footprint selection, and reference-evaluation. Demo
+  helpers should chain existing entry points rather than introducing a
+  parallel code path; this keeps the demo honest about what the real
+  pipeline does.
+- Verbose mode in a demo script should default to on for review and
+  onboarding contexts. A `--quiet` flag inverts it for CI-style smoke
+  use, which is the less common need.
+- PDF generation for review documents is handled by a uv-installed
+  Python tool (`markdown-pdf`) invoked through
+  `uv run --with markdown-pdf python scripts/build_review_pdf.py`. The
+  markdown source under `docs/review/` is the canonical artifact; the
+  PDF is regenerated on demand and is not tracked in Git.
+- `SpatialSourceContract` is a separate dataclass from `CatalogContract`
+  with no `kind` field. Helpers that accept both must check the type
+  before reading `kind` or `spatial_source`.
 
 ## 2026-05-22
 

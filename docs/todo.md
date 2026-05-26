@@ -1,6 +1,34 @@
 # Todo
 
-Last updated: 2026-05-22
+Last updated: 2026-05-26
+
+## Current Task: Funding Review Demo and Document
+
+- [x] Create a feature branch before editing.
+- [x] Add a Python demo script that runs the COSMOS ELG workflow end-to-end with a verbose narrative mode, defaulting to verbose=True.
+- [x] Add a review document under `docs/review/` introducing the target-selection procedure and walking through the demo in detail for non-specialist reviewers.
+- [x] Add a reproducible PDF builder using a uv-installed Python tool and produce `docs/review/must_ts_v0_review.pdf`.
+- [x] Run the demo end-to-end and confirm the QA figures, cutflow, and summary match the previously measured numbers.
+- [x] Run verification checks and record a review.
+
+## Review
+
+- Added `scripts/run_elg_demo.py` orchestrating inspect → reference-footprint
+  selection → reference-evaluation using the existing `must_ts` Python API.
+  Defaults to verbose=True; pass `--quiet` to suppress narration, or
+  `--skip-reference-footprint` to skip Step 3.
+- Added `docs/review/must_ts_v0_review.md` covering the funding-review
+  background, design principles, pipeline architecture, the COSMOS ELG
+  demo, reproducibility instructions, limitations, and a roadmap.
+- Added `scripts/build_review_pdf.py` and used `uv run --with markdown-pdf`
+  to produce `docs/review/must_ts_v0_review.pdf` (about 431 KB). The PDF is
+  not committed to Git; reviewers regenerate it from markdown.
+- Demo run finished in roughly 4 seconds end-to-end and reproduced the
+  previously measured numbers: 161,944 COSMOS reference rows, 154,646
+  joined to HSC photometry, 7,298 missing, 16,062 selected ELG-proxy
+  rows, surface density 8,031 deg^-2.
+- Verification passed: `uv run ruff check .`, `uv run ruff format --check .`,
+  `uv run pytest`, `uv lock --check`.
 
 ## Current Task: README Documentation Refresh
 

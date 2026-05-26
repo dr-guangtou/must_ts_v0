@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Generated review PDFs (rebuilt from docs/review/*.md on demand)
+docs/review/*.pdf
